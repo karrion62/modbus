@@ -71,7 +71,7 @@ static int header_check(modbus_t *modbus) // TCP 에서만 사용함, 보낸 데
     {
         if (memcmp(modbus->txbuf, modbus->rxbuf, modbus->txlen) == 0)
         {
-            return 0; // 기능코드 5, 6에 적용, 동일 데이터를 수신하여 데이터 확인 종료
+            return 1; // 기능코드 5, 6에 적용, 동일 데이터를 수신하여 데이터 확인 종료
         }
     }
     else if (modbus->txlen != modbus->rxlen)
@@ -80,7 +80,7 @@ static int header_check(modbus_t *modbus) // TCP 에서만 사용함, 보낸 데
             (modbus->txbuf[2] == modbus->rxbuf[2]) && (modbus->txbuf[3] == modbus->rxbuf[3]) && // Protocol id
             (modbus->txbuf[6] == modbus->rxbuf[6])) // Unit id
         {
-            return 0;
+            return 2;
         }
     }
     return -1;
